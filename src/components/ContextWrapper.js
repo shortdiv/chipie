@@ -4,13 +4,7 @@ export default {
     return h(
       "template",
       {
-        attrs: props,
-        provide() {
-          debugger;
-          return {
-            mapContext: this.mapContext
-          };
-        }
+        attrs: props
       },
       children
     );
