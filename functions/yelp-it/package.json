@@ -1,0 +1,15 @@
+{
+  "name": "yelp-it",
+  "version": "1.0.0",
+  "description": "",
+  "main": "yelp-it.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Divya",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^0.18.0",
+    "yelp-fusion": "^3.0.0"
+  }
+}

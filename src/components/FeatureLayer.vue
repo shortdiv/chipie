@@ -8,7 +8,15 @@ export default {
     layout: { type: Object, required: false, default: () => ({}) },
     paint: { type: Object, required: false, default: () => ({}) },
     img: { type: String, required: false },
-    layerType: { type: String, required: true }
+    layerType: { type: String, required: true },
+    imgName: { type: String, required: false },
+    imgSize: { type: String, required: false }
+  },
+  provide() {
+    return {
+      mapContext: this.mapContext,
+      mapId: this.mapId
+    };
   },
   data() {
     return {
@@ -28,14 +36,14 @@ export default {
       if (this.img) {
         const image = this.img;
         this.mapContext.loadImage(image, (err, img) => {
-          this.mapContext.addImage("vue", img);
+          this.mapContext.addImage(this.imgName, img);
           this.mapContext.addLayer({
             id: this.mapId,
             source: this.sourceId,
             type: this.layerType,
             layout: {
-              "icon-size": 0.15,
-              "icon-image": "vue"
+              "icon-size": Number(this.imgSize),
+              "icon-image": this.imgName
             }
           });
         });
