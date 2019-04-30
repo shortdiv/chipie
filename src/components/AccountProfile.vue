@@ -2,7 +2,9 @@
   <div class="account-profile">
     <span class="account-profile--img" @click="toggleLogin"></span>
     <div v-show="isOpen" id="auth--modal">
-      <button @click="logout()">Logout</button>
+      <button @click="logout()">
+        <span>Logout</span>
+      </button>
     </div>
   </div>
 </template>
@@ -42,11 +44,11 @@ export default {
 }
 #auth--modal {
   position: absolute;
-  width: calc(100vw - 700px);
+  width: 100px;
   right: 0;
   top: 59px;
   margin-right: 1em;
-  padding: 20px 20px 0 20px;
+  padding: 20px;
   text-align: left;
   background: #fff;
   border-color: rgba(0, 0, 0, 0.4);
@@ -72,12 +74,27 @@ export default {
   padding: 1em;
   &--img {
     display: block;
-    background-image: url(https://lh3.googleusercontent.com/-0biSKei0NrE/AAAAAAAAAAI/AAAAAAAAAAA/ACHi3rcnYQtCXN_m88oAGx7XbkdXFlWeAg/s64-c-mo/photo.jpg);
+    background-image: url("../assets/user-avatar.png");
     border-radius: 50%;
     background-size: 32px 32px;
     height: 32px;
     width: 32px;
     cursor: pointer;
+  }
+}
+button {
+  position: relative;
+  margin: 0 auto;
+  display: block;
+  right: 0;
+  background: none;
+  color: black;
+  font-size: 1.5em;
+  cursor: pointer;
+  span {
+    font-size: 0.75em;
+    position: relative;
+    vertical-align: middle;
   }
 }
 </style>

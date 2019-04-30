@@ -1,7 +1,17 @@
 <template>
   <div class="slider">
-    <ul>
-      <li v-for="(dat, ind) in yelpData" :key="`${ind}`">
+    <ul class="column-list">
+      <li
+        v-for="(dat, ind) in yelpData"
+        :key="`${ind}`"
+        :ref="
+          dat.properties.name
+            .toLowerCase()
+            .split(' ')
+            .join('-')
+        "
+        class="column-list--item"
+      >
         <div class="column--item">
           <div class="column--item-img">
             <img
@@ -13,12 +23,12 @@
           </div>
           <div class="restaurant--text">
             <h3>{{ dat.properties.name }}</h3>
-            <span>{{ dat.properties.rating }}</span> |
-            <span>{{ dat.properties.review_count }} reviews</span>
-            <div>
-              <a :href="stringifyAddress(dat)">Directions</a>
-            </div>
           </div>
+          <UniversalRating
+            :id="ind"
+            :review="dat.properties.rating"
+            :totalReviews="dat.properties.review_count"
+          />
           <ReviewRatings
             v-if="ratings"
             :id="ind"
@@ -26,6 +36,9 @@
             :priorRating="getRating(dat.properties.name)"
             @rating-selected="selectRating"
           />
+          <div>
+            <a :href="stringifyAddress(dat)">Directions</a>
+          </div>
         </div>
       </li>
     </ul>
@@ -33,19 +46,22 @@
 </template>
 
 <script>
+import UniversalRating from "@/components/UniversalRating.vue";
 import ReviewRatings from "@/components/ReviewRatings.vue";
+
 export default {
   name: "slider",
   props: {
     yelpData: { type: Array, required: false, default: () => [] },
-    ratings: { type: Object, required: false, default: () => {} }
+    ratings: { type: Object, required: false, default: () => {} },
+    chiPieFocus: { type: String }
   },
   components: {
-    ReviewRatings
+    ReviewRatings,
+    UniversalRating
   },
   methods: {
     getRating(val) {
-      debugger;
       return this.ratings[val] ? this.ratings[val].rating : null;
     },
     stringifyAddress(data) {
@@ -61,7 +77,20 @@ export default {
       this.$emit("rating-selected", val);
     }
   },
+  watch: {
+    chiPieFocus(val) {
+      val = val
+        .toLowerCase()
+        .split(" ")
+        .join("-");
+      debugger;
+      this.$refs[val][0].scrollIntoView({
+        behavior: "smooth"
+      });
+    }
+  },
   mounted() {
+    console.log(this.$refs);
     const lazyLoadImages = document.querySelectorAll(".lazy");
     var imageObserver = new IntersectionObserver(function(entries) {
       entries.forEach(function(entry) {
@@ -99,6 +128,12 @@ export default {
   }
 }
 .column {
+  &-list--item {
+    &:not(:last-child) {
+      border-bottom: 1px solid #e6e6e6;
+      padding-bottom: 10px;
+    }
+  }
   &--item {
     cursor: pointer;
     position: relative;

@@ -1,24 +1,5 @@
-export const state = {
-  isMenuDrawerOpen: false
-};
-
-export const mutations = {
-  YAY() {
-    console.log("yay");
-  }
-};
-
 import firebase from "firebase";
 require("firebase/firestore");
-
-// const config = {
-//   apiKey: `${process.env.VUE_APP_API_KEY}`,
-//   authDomain: `${process.env.VUE_APP_PROJECT_ID}.firebaseapp.com`,
-//   databaseURL: `https://${process.env.VUE_APP_PROJECT_ID}.firebaseio.com`,
-//   projectId: `${process.env.VUE_APP_PROJECT_ID}`,
-//   storageBucket: `${process.env.VUE_APP_STORAGE_BUCKET}.appspot.com`,
-//   messagingSenderId: `${process.env.VUE_APP_SENDER_ID}`
-// };
 
 var config = {
   apiKey: "AIzaSyBbJ1cL0qa1YO34BxYY7Hemqc1qcTQApfg",
@@ -32,13 +13,28 @@ var config = {
 firebase.initializeApp(config);
 const db = firebase.firestore();
 
+export const state = {
+  chiPieReviews: {}
+};
+
+export const mutations = {
+  YAY() {
+    console.log("yay");
+  },
+  SET_CHIPIE_REVIEWS(state, value) {
+    var t = {};
+    value.forEach(val => {
+      t[val.id] = val.data();
+    });
+    debugger;
+    state.chiPieReviews = t;
+  }
+};
+
 export const actions = {
   createRating({ commit }, value) {
     return new Promise((resolve, reject) => {
-      var user = db
-        .collection("users")
-        .doc("8efdc33b-b196-402f-89f7-791bfea0881f");
-      debugger;
+      var user = db.collection("users").doc(value.id);
       user
         .collection("pizza-places")
         .doc(value.name)
@@ -56,9 +52,7 @@ export const actions = {
   },
   updateRating({ commit }, value) {
     return new Promise((resolve, reject) => {
-      var user = db
-        .collection("users")
-        .doc("8efdc33b-b196-402f-89f7-791bfea0881f");
+      var user = db.collection("users").doc(value.id);
       var docRef = user.collection("pizza-places").doc(value.name);
       docRef
         .update({
@@ -75,9 +69,7 @@ export const actions = {
   },
   setRatings({ dispatch }, value) {
     return new Promise((resolve, reject) => {
-      var user = db
-        .collection("users")
-        .doc("8efdc33b-b196-402f-89f7-791bfea0881f");
+      var user = db.collection("users").doc(value.id);
       var docRef = user.collection("pizza-places").doc(value.name);
 
       docRef
@@ -96,16 +88,15 @@ export const actions = {
         });
     });
   },
-  getRatings() {
+  getRatings({ commit }, value) {
     return new Promise((resolve, reject) => {
-      var user = db
-        .collection("users")
-        .doc("8efdc33b-b196-402f-89f7-791bfea0881f");
+      var user = db.collection("users").doc(value);
       user
         .collection("pizza-places")
         .get()
         .then(res => {
           if (res.docs) {
+            commit("SET_CHIPIE_REVIEWS", res.docs);
             resolve(res.docs);
           } else {
             resolve("no data liao");

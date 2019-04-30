@@ -17,7 +17,6 @@ export const state = {
 export const mutations = {
   SET_CURRENT_USER(state, value) {
     state.currentUser = value;
-    debugger;
     saveState("auth.currentUser", value);
   },
   TOGGLE_LOAD(state) {
@@ -42,7 +41,6 @@ export const getters = {
 
 export const actions = {
   init() {
-    debugger;
     localStorage.removeItem("auth.currentUser");
   },
   validate({ commit, state }) {

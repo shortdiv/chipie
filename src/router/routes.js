@@ -8,7 +8,7 @@ export default [
     name: "home",
     component: Home,
     meta: {
-      authRequired: false
+      authRequired: true
     }
   },
   {

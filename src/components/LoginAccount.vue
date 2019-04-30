@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="login-screen">
     <div class="account-login">
       <form @submit.prevent="login()" v-if="isNewUser">
         <label for="">
@@ -78,6 +78,7 @@ export default {
       let token = decodeURIComponent(window.location.search)
         .substring(1)
         .split("confirmation_token=")[1];
+      debugger;
       this.attemptLogin({ token, ...this.loginCreds })
         .then(res => {
           this.transferToDashboard();
@@ -105,6 +106,18 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.login-screen {
+  margin: 0 auto;
+  padding: 40px;
+  height: 400px;
+  width: calc(100vw - 180px);
+  max-width: 600px;
+  min-width: 200px;
+  background-color: white;
+  h2 {
+    margin-bottom: 13px;
+  }
+}
 .account-login {
   input[type="text"],
   input[type="password"] {
@@ -124,6 +137,10 @@ export default {
     margin-bottom: 0.5em;
     padding: 6px 14px;
     width: 100%;
+    &:focus {
+      border-color: #e2873e;
+      outline: none;
+    }
   }
   button {
     margin-top: 0.5em;
