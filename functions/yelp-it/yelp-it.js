@@ -1,7 +1,6 @@
 // const yelp = require("yelp-fusion");
 
 exports.handler = function(event, context, callback) {
-  console.log(process.env.VUE_APP_YELP_API);
   callback(null, {
     statusCode: 200,
     body: JSON.stringify({
