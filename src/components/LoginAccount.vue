@@ -71,14 +71,12 @@ export default {
       this.isNewUser = !this.isNewUser;
     },
     transferToDashboard() {
-      debugger;
       this.$router.push(this.$route.query.redirect || "/");
     },
     login() {
       let token = decodeURIComponent(window.location.search)
         .substring(1)
         .split("confirmation_token=")[1];
-      debugger;
       this.attemptLogin({ token, ...this.loginCreds })
         .then(res => {
           this.transferToDashboard();

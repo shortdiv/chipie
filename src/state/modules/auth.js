@@ -57,7 +57,6 @@ export const actions = {
           .login(credentials.email, credentials.password)
           .then(response => {
             dispatch("setCookie", response.token).then(() => {
-              debugger;
               localStorage.setItem("nf_jwt", response.token);
               resolve(response);
               commit("SET_CURRENT_USER", response);
@@ -116,7 +115,6 @@ export const actions = {
   attemptLogout({ commit }) {
     return new Promise((resolve, reject) => {
       const user = auth.currentUser();
-      debugger;
       user
         .logout()
         .then(response => {

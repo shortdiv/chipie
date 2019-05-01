@@ -160,7 +160,6 @@ export default {
         this.dataLoaded = true;
         this.yelpData = results;
         console.log(this.currentUser);
-        debugger;
         const r = await this.getRatings(this.currentUser.id);
 
         if (r.length === 0) {

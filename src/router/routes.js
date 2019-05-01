@@ -17,9 +17,7 @@ export default [
     component: Login,
     meta: {
       beforeResolve(to, from, next) {
-        debugger;
         if (store.getters["auth/isLoggedIn"]) {
-          debugger;
           next({ name: "home" });
         } else {
           next();

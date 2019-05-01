@@ -83,7 +83,6 @@ export default {
         .toLowerCase()
         .split(" ")
         .join("-");
-      debugger;
       this.$refs[val][0].scrollIntoView({
         behavior: "smooth"
       });
