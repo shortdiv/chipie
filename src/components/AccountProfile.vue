@@ -2,6 +2,7 @@
   <div class="account-profile">
     <span class="account-profile--img" @click="toggleLogin"></span>
     <div v-show="isOpen" id="auth--modal">
+      <a href="https://chipie-gated.netlify.com">Admin Page</a>
       <button @click="logout()">
         <span>Logout</span>
       </button>
