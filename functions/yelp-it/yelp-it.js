@@ -1,7 +1,7 @@
 const yelp = require("yelp-fusion");
 
 exports.handler = function(event, context, callback) {
-  const apiKey = `${VUE_APP_YELP_API}`;
+  const apiKey = `${process.env.VUE_APP_YELP_API}`;
 
   const client = yelp.client(apiKey);
 
