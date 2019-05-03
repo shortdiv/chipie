@@ -1,4 +1,4 @@
-/admin/* 200! Role=editor
+/admin/* /admin/index.html 200! Role=editor
 
 # Else, redirect them to denied.
 /admin /access-denied/ 401
