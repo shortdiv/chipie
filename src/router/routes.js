@@ -24,5 +24,17 @@ export default [
         }
       }
     }
+  },
+  {
+    path: "/admin",
+    name: "admin",
+    component: () =>
+      import(/* webpackChunkName: "admin" */ "../views/Admin.vue")
+  },
+  {
+    path: "/access-denied",
+    name: "accessdenied",
+    component: () =>
+      import(/* webpackChunkName: "admin" */ "../views/AccessDenied.vue")
   }
 ];
