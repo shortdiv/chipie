@@ -39,7 +39,7 @@ exports.handler = function(event, context, callback) {
     });
   }
 
-  const redirectUrl = "https://chipie.netlify.live/admin";
+  const redirectUrl = `${referer}admin`;
   const html = `
   <html lang="en">
     <head>
