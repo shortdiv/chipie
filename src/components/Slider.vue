@@ -37,7 +37,8 @@
             @rating-selected="selectRating"
           />
           <div>
-            <a :href="stringifyAddress(dat)">Directions</a>
+            <!-- <a :href="stringifyAddress(dat)">Directions</a> -->
+            <button @click="stringifyAddress(dat)">Directions</button>
           </div>
         </div>
       </li>
@@ -48,6 +49,7 @@
 <script>
 import UniversalRating from "@/components/UniversalRating.vue";
 import ReviewRatings from "@/components/ReviewRatings.vue";
+import axios from "axios";
 
 export default {
   name: "slider",
@@ -65,13 +67,19 @@ export default {
       return this.ratings[val] ? this.ratings[val].rating : null;
     },
     stringifyAddress(data) {
-      let name = data.properties.name.split(" ").join("+");
-      let address = data.properties.location.address1.split(" ").join("+");
-      return `https://www.google.com/maps/dir//${name},+${address},+${
-        data.properties.location.city
-      },+${data.properties.location.state},+${
-        data.properties.location.zip_code
-      }/@${data.geometry.coordinates[1]},${data.geometry.coordinates[0]},17z`;
+      axios
+        .get("/.netlify/functions/directions", {
+          params: {
+            origin: { longitude: -87.6385644, latitude: 41.8776048 },
+            destination: {
+              longitude: data.geometry.coordinates[0],
+              latitude: data.geometry.coordinates[1]
+            }
+          }
+        })
+        .then(res => {
+          this.$emit("find-route", res.data.results);
+        });
     },
     selectRating(val) {
       this.$emit("rating-selected", val);

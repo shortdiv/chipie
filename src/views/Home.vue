@@ -10,6 +10,21 @@
             sourceType="geojson"
             :dataSrc="gotoVenue"
           />
+          <SourceLayer
+            :mapContext="mapContext"
+            sourceId="animated-line"
+            sourceType="geojson"
+            :dataSrc="directions"
+          />
+          <AnimateLayer
+            v-if="line !== null"
+            :map="mapContext"
+            :data="directions"
+            sourceId="animated-line"
+            :time="6"
+            :paint="linePaint"
+            :layout="lineLayout"
+          />
           <FeatureLayer
             :mapContext="mapContext"
             mapId="goto-chi-venue"
@@ -53,6 +68,7 @@
         :yelpData="yelpData.features"
         :ratings="rates"
         @rating-selected="setReviewRatings"
+        @find-route="findRoute"
       />
     </div>
   </div>
@@ -60,12 +76,13 @@
 
 <script>
 import BaseMap from "@/components/BaseMap.vue";
+import AnimateLayer from "@/components/AnimateLayer.vue";
 import ContextWrapper from "@/components/ContextWrapper.js";
 import FeatureLayer from "@/components/FeatureLayer.vue";
 import FeaturePopup from "@/components/FeaturePopup.vue";
 import SourceLayer from "@/components/SourceLayer.vue";
 import AccountProfile from "@/components/AccountProfile.vue";
-import Icon from "@/assets/chicagologo2.png";
+import Icon from "@/assets/jscamp.png";
 import Slider from "@/components/Slider.vue";
 import axios from "axios";
 
@@ -75,6 +92,7 @@ export default {
   name: "home",
   components: {
     BaseMap,
+    AnimateLayer,
     SourceLayer,
     FeatureLayer,
     FeaturePopup,
@@ -84,6 +102,7 @@ export default {
   },
   data() {
     return {
+      line: null,
       rates: {},
       reviewsLoaded: false,
       chipieClicked: "Lou Malnati's Pizzeria",
@@ -99,11 +118,12 @@ export default {
             type: "Feature",
             geometry: {
               type: "Point",
-              coordinates: [-87.604159, 41.89183]
+              coordinates: [-87.6385644, 41.8776048]
             },
             properties: {
-              name: "GoTo Chicago",
-              aka: "Navy Pier"
+              name: "JSCamp",
+              aka: "cars.com",
+              address: "300 South Riverside Plaza"
             }
           }
         ]
@@ -111,6 +131,22 @@ export default {
       yelpData: {
         type: "FeatureCollection",
         features: []
+      },
+      linePaint: {
+        "line-color": "#888",
+        "line-width": 4
+      },
+      lineLayout: {
+        "line-join": "round",
+        "line-cap": "round"
+      },
+      directions: {
+        type: "Feature",
+        properties: {},
+        geometry: {
+          type: "LineString",
+          coordinates: []
+        }
       }
     };
   },
@@ -143,6 +179,17 @@ export default {
       return {
         type: "FeatureCollection",
         features
+      };
+    },
+    findRoute(route) {
+      this.line = route.routes[0];
+      this.directions = {
+        type: "Feature",
+        properties: {
+          distance: route.routes[0].distance,
+          duration: route.routes[0].duration
+        },
+        geometry: route.routes[0].geometry
       };
     }
   },

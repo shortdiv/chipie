@@ -20,7 +20,18 @@ export default {
   render() {
     return null;
   },
+  watch: {
+    dataSrc(newVal) {
+      if (this.mapContext.getSource(this.sourceId) !== undefined) {
+        debugger;
+        this.mapContext.getSource(this.sourceId).setData(newVal);
+      }
+    }
+  },
   mounted() {
+    if (this.sourceId == "animated-line") {
+      debugger;
+    }
     if (this.sourceType === "geojson") {
       this.mapContext.addSource(this.sourceId, {
         type: "geojson",

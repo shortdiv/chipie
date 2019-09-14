@@ -28,12 +28,18 @@ export default [
   {
     path: "/admin",
     name: "admin",
+    meta: {
+      authRequired: true
+    },
     component: () =>
       import(/* webpackChunkName: "admin" */ "../views/Admin.vue")
   },
   {
     path: "/access-denied",
     name: "accessdenied",
+    meta: {
+      authRequired: true
+    },
     component: () =>
       import(/* webpackChunkName: "admin" */ "../views/AccessDenied.vue")
   }

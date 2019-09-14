@@ -48,6 +48,9 @@ export default {
           });
         });
       } else {
+        if (this.mapId == "animated-line-draw") {
+          debugger;
+        }
         this.mapContext.addLayer({
           id: this.mapId,
           source: this.sourceId,

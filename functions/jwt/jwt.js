@@ -1,6 +1,7 @@
 const cookie = require("cookie");
 
 exports.handler = function(event, context, callback) {
+  console.log(event);
   const parsedBody = JSON.parse(event.body);
   const { token } = parsedBody;
 

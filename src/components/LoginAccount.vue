@@ -78,9 +78,8 @@ export default {
         .substring(1)
         .split("confirmation_token=")[1];
       this.attemptLogin({ token, ...this.loginCreds })
-        .then(res => {
+        .then(() => {
           this.transferToDashboard();
-          console.log(res);
         })
         .catch(err => {
           console.log(err);

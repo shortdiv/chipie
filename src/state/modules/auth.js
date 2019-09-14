@@ -152,7 +152,7 @@ export const actions = {
   setCookie({ commit }, token) {
     return new Promise((resolve, reject) => {
       axios
-        .post("/.netlify/functions/jwt", JSON.stringify({ token: token }))
+        .post("/.netlify/functions/jwt", { token })
         .then(res => {
           commit("YAY");
           resolve(res);

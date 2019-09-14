@@ -26,7 +26,6 @@ export const mutations = {
     value.forEach(val => {
       t[val.id] = val.data();
     });
-    debugger;
     state.chiPieReviews = t;
   }
 };
